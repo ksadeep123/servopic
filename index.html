@@ -10,9 +10,12 @@
   <script>
     document.getElementById('takePicButton').addEventListener('click', function() {
       console.log("Button clicked, sending request to backend.");
-      fetch('https://6524-123-231-105-12.ngrok-free.app/take-pic')
+      fetch('https://c0c6-123-231-105-12.ngrok-free.app/take-pic')
         .then(response => {
-          console.log("Received response from backend.");
+          console.log("Received response from backend:", response);
+          if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+          }
           return response.json();
         })
         .then(data => {
@@ -21,7 +24,7 @@
             console.log("Picture taken:", data.pic_name);
             const picContainer = document.getElementById('picContainer');
             const picElement = document.createElement('img');
-            picElement.src = `https://6524-123-231-105-12.ngrok-free.app/public/${data.pic_name}`;
+            picElement.src = `https://c0c6-123-231-105-12.ngrok-free.app/public/${data.pic_name}`;
             picElement.alt = 'Taken Picture';
             picContainer.innerHTML = ''; // Clear the container before adding new image
             picContainer.appendChild(picElement);
