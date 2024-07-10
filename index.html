@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Take a Pic</title>
+  <title>Move Servos</title>
 </head>
 <body>
-  <button id="takePicButton">Take a Pic</button>
-  <div id="picContainer"></div>
+  <button id="moveServosButton">Move Servos</button>
 
   <script>
-    document.getElementById('takePicButton').addEventListener('click', function() {
+    document.getElementById('moveServosButton').addEventListener('click', function() {
       console.log("Button clicked, sending request to backend.");
-      fetch('https://dc9f-123-231-105-12.ngrok-free.app/take-pic')
+      fetch('https://14d5-2402-4000-21c3-dcfe-417e-b720-6c4a-72d.ngrok-free.app/move-servos')
         .then(response => {
           console.log("Received response from backend:", response);
           if (!response.ok) {
@@ -20,17 +19,7 @@
         })
         .then(data => {
           console.log("Parsed JSON data:", data);
-          if (data.pic_name) {
-            console.log("Picture taken:", data.pic_name);
-            const picContainer = document.getElementById('picContainer');
-            const picElement = document.createElement('img');
-            picElement.src = `https://dc9f-123-231-105-12.ngrok-free.app/public/${data.pic_name}`;
-            picElement.alt = 'Taken Picture';
-            picContainer.innerHTML = ''; // Clear the container before adding new image
-            picContainer.appendChild(picElement);
-          } else {
-            console.error("Failed to take picture:", data.message);
-          }
+          console.log("Message:", data.message);
         })
         .catch(error => console.error('Error:', error));
     });
