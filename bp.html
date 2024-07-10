@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Take a Pic</title>
+</head>
+<body>
+  <button id="takePicButton">Take a Pic</button>
+  <div id="picContainer"></div>
+
+  <script>
+    document.getElementById('takePicButton').addEventListener('click', function() {
+      console.log("Button clicked, sending request to backend.");
+      fetch('https://6524-123-231-105-12.ngrok-free.app/take-pic')
+        .then(response => {
+          console.log("Received response from backend.");
+          return response.json();
+        })
+        .then(data => {
+          console.log("Parsed JSON data:", data);
+          if (data.pic_name) {
+            console.log("Picture taken:", data.pic_name);
+            const picContainer = document.getElementById('picContainer');
+            const picElement = document.createElement('img');
+            picElement.src = `https://6524-123-231-105-12.ngrok-free.app/public/${data.pic_name}`;
+            picElement.alt = 'Taken Picture';
+            picContainer.innerHTML = ''; // Clear the container before adding new image
+            picContainer.appendChild(picElement);
+          } else {
+            console.error("Failed to take picture:", data.message);
+          }
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  </script>
+</body>
+</html>
